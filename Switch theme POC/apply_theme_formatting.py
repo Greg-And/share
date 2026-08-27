@@ -394,6 +394,15 @@ def format_table_like(objects, is_matrix):
         "fontColor": measure_color(M_FONT_SECOND),
         "backColor": measure_color(M_VISUAL_BG),
     })
+    # 'total' and 'subTotals' drive the Row/Column SUBTOTAL sections. The matrix
+    # grand totals are separate objects with no fx button in the UI - Desktop
+    # writes a ThemeDataColor there, which we swap for a measure binding.
+    # only_if_exists: the objects appear only once someone has set a grand-total
+    # colour by hand, and creating them from scratch would be a guess.
+    set_prop(objects, "columnTotal",
+             {"fontColor": measure_color(M_FONT_SECOND)}, only_if_exists=True)
+    set_prop(objects, "rowTotal",
+             {"fontColor": measure_color(M_FONT_SECOND)}, only_if_exists=True)
     if is_matrix:
         set_prop(objects, "rowHeaders", {
             "fontColor": measure_color(HEADER_FONT),
